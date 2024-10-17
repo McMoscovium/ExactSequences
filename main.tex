@@ -1,0 +1,142 @@
+\documentclass[a4paper,11pt]{jsarticle}
+
+\usepackage{amsmath,amsthm,amsfonts,float,cases,bm,amssymb,amssymb,ascmac,url,enumitem}
+\usepackage[dvipdfmx]{graphicx}
+\usepackage{color}
+\usepackage[all,pdf]{xy}
+%\usepackage{makeidx}%これを使ったうえで\index{}を使わないとエラーになる
+\usepackage[bbgreekl]{mathbbol}
+\usepackage[%,
+dvipdfmx,% 欧文ではコメントアウトする
+setpagesize=false,%
+bookmarks=true,%
+bookmarksdepth=tocdepth,%
+bookmarksnumbered=true,%
+colorlinks=false,%
+pdftitle={},%
+pdfsubject={},%
+pdfauthor={},%
+pdfkeywords={}%
+]{hyperref}% PDFのしおり機能の日本語文字化けを防ぐ((u)pLaTeXのときのみかく)
+\usepackage{pxjahyper}
+\DeclareMathSymbol{\bbepsilon}{\mathord}{bbold}{"0F}
+
+
+%\makeindex%インデックスつかわないときにこれoffにしないとエラー出る
+
+\setlength{\textwidth}{\fullwidth}
+\setlength{\textheight}{40\baselineskip}
+\addtolength{\textheight}{\topskip}
+\setlength{\voffset}{-0.55in}
+
+\theoremstyle{definition}
+\newtheorem{thm}{定理}[section]
+\newtheorem{prop}[thm]{命題}
+\newtheorem{cor}[thm]{系}
+\newtheorem{dfn}[thm]{定義}
+\newtheorem{lem}[thm]{補題}
+\newtheorem{rem}[thm]{注意}
+\newtheorem{eg}[thm]{例}
+
+\DeclareMathOperator{\Hom}{\mathrm{Hom}}
+\DeclareMathOperator{\id}{\mathrm{id}}
+\DeclareMathOperator{\Int}{\mathrm{Int}}
+\DeclareMathOperator{\Ima}{\mathrm{Im}}
+\DeclareMathOperator{\im}{\mathrm{im}}
+\DeclareMathOperator{\Coker}{\mathrm{Coker}}
+\DeclareMathOperator{\coker}{\mathrm{coker}}
+\DeclareMathOperator{\Coim}{\mathrm{Coim}}
+\DeclareMathOperator{\coim}{\mathrm{coim}}
+\DeclareMathOperator{\Ker}{\mathrm{Ker}}
+\renewcommand{\ker}{\mathop{\mathrm{ker}}}
+
+
+\newcommand{\ou}[1]{\overline{\underline{#1}}}
+
+\setcounter{tocdepth}{3}%目次に表示する数字の深さ
+\setcounter{section}{-1}
+
+\begin{document}
+\date{}
+\title{完全列と蛇の補題}
+
+\maketitle
+
+\begin{abstract}
+  Iversenの層のコホモロジーの本\cite{iversen2012cohomology}のsection I.1ではexact category（多分、普通のものと異なる）上のホモロジー代数について書かれている。このPDFではとくに蛇の補題についてまとめるが、ここで定義する完全圏は射集合にアーベル群の構造を仮定していないのでアーベル圏よりも弱い圏で、例えば射の単射性の完全列による特徴づけができない等の制限がある。しかしながらそれでもある程度ホモロジー代数を行うことが可能なので、どれくらいのことができるかメモしておく。
+
+  やたら条件を緩めても欲張りだとか弱い結果しか得られないとか言われそうだが、homsetにアーベル群の構造が入ってない状況でも蛇の補題が使えると思えば、こういうことをやってもいいだろう。
+\end{abstract}
+
+\tableofcontents
+
+\section{完全圏}
+\subsection{（余）核、（余）像}
+\paragraph{定義と性質}
+%核、余核、像、余像を定義する
+%モノ（エピ）射と完全列の関係
+%pullbackの性質（nlabに載っているレベルのものと、中岡3.3.23）
+
+核と像はequalizerなのでモノ射である。余核と余像はcoequalizerなのでエピ射である。いずれも、ゼロ射を持つ加法圏とは限らない圏に対して成り立つ性質である。
+\paragraph{射の自然な分解}
+%射および四角図式の分解をおこなう。
+射$f\colon X \to Y$があったとき、（余）核、（余）像を用いて分解する方法を述べる。
+\begin{enumerate}[label=\underline{\textsf{Step \arabic*}}]
+  \item まず、定義から、\[\xymatrix{
+    \Ker f\ar[r]&X\ar[r]&\Coim f
+  }\]\[
+  \xymatrix{
+    \Ima f\ar[r]&Y\ar[r]&\Coker f
+  }
+  \]を得る。
+  \item それを横に並べ、$f$でつなぐ（下の図式黒実線）。
+  \item $\Ima,\ \Coim$の普遍性から図式を可換にする点線矢印が一意に生える。
+  \item 再び、$\Ima$もしくは$\Coim$の普遍性から図式を可換にする矢印（赤実線）が一意に生える。このとき、どちらの普遍性を使っても、一意性により同じ矢印が生える。
+\end{enumerate}
+\begin{equation}\label{diagram:coim_to_im}
+  \vcenter{
+  \xymatrix{
+  \Ker f \ar[rd] & & \Ima f \ar[rd] & & \\
+  & X \ar[rd] \ar[rr]^(.3){f}|\hole \ar@{.>}[ru]^{\underline{f}} & & Y \ar[rd] & \\
+  & & \Coim f \ar@{.>}[ru]_{\overline{f}} \ar@[red][uu]_(.3){\ou{f}}& & \Coker f
+}
+}
+\end{equation}
+
+このとき、$f=\im f\circ \ou{f}\circ \coim f $である。
+
+次に、可換な四角形\[\xymatrix{
+  X\ar[r]^{f}\ar[d]_{x}&Y\ar[d]^{y}\\
+  X'\ar[r]_{f'}&Y'
+}\]の$f,\ f'$に対し上のような分解を施すと次の図式を得る：\[\xymatrix{
+  \Ker f\ar[r]\ar[d]_{\underline{x}}&X\ar[r]\ar[d]_{x}&\Coim f\ar[r]^{\ou{f}}\ar[d]_{\overline{x}}&\Ima f\ar[r]\ar[d]^{\underline{y}}&Y\ar[r]\ar[d]^{y}&\Coker f\ar[d]^{\overline{y}}\\
+  \Ker f'\ar[r]&X'\ar[r]&\Coim f'\ar[r]_{\ou{f'}}&\Ima f'\ar[r]&Y'\ar[r]&\Coker f'
+}\]いずれの射も普遍性によって生える射なので真ん中以外の四角は可換であるまた、$\underline{y}\circ \ou{f}$および$\ou{f'}\circ \overline{x}$に$\coim f$（これはエピ）と$\im f'$（これはモノ）を合成したものが等しいので、真ん中の四角も可換である。
+\subsection{完全圏}
+完全圏とは、零対象、核、余核をもち、上で定義した射$\ou{f}$が常に同型である圏のことと定義する\footnote{本当の完全圏は違うらしい。しかし\cite{iversen2012cohomology}でそう定義されているのでここではそれに合わせる。}。この小節の議論は完全圏上で行う。
+\paragraph{完全圏で成り立つ補題}
+\begin{lem}
+射$f\colon X\to Y$に対し、像（resp.余像）の普遍性で伸びる標準的な射$\underline{f}$（resp. $\overline{f}$）はエピ（resp.モノ）である：\[\xymatrix{
+  X\ar[r]^f\ar@[red]@{->>}[rd]_{\underline{f}}&Y&X\ar[r]^{f}\ar@{->>}[d]&Y\\
+  &\Ima f\ar@{^(->}[u]&\Coim f\ar@{^(->}@[red][ur]_{\overline{f}}&
+}\]
+\end{lem}
+\begin{proof}
+  完全圏なので図式(\ref{diagram:coim_to_im})における$\ou{f}$は同型、特にモノかつエピである。$\coim f$と$\im f$はそれぞれエピ、モノなので、それらと$\ou{f}$の合成である$\underline{f}$と$\overline{f}$はそれぞれエピ、モノである。
+\end{proof}
+\paragraph{完全列}
+与えられたチェイン$\xymatrix{A\ar[r]^f&B\ar[r]^g&C}$が$gf=0$を満たすとする。このときにこれが完全であるとは、$B$の部分対象として$\Ker g\cong \Ima f$であると定めるのが普通だが、ここでは上で構成した射の分解（の一部）を使って、完全性についてもう少し調べる\footnote{$gf=0$を仮定しないとなかなかいい結果は得られない。完全性とは鎖のホモロジーの自明性のことであると思うことにすれば、$gf=0$の仮定はあってしかるべきものになるが、それでよいのだろうか。。。}。
+
+\[
+\xymatrix{
+&&\Ima f\ar@{_(->}[rd]&&&\Ker g\ar@{^(->}[lld]&\\
+A\ar[rrr]^{f}\ar[urr]^{\underline{f}}&&&B\ar[rrr]^{g}\ar@{->>}[lld]\ar@{->>}[rd]&&&C\\
+&\Coker f&&&\Coim h\ar[urr]_{\overline{g}}&&
+}
+\]
+\bibliographystyle{alpha}
+\bibliography{bib}
+
+%printindex
+
+\end{document}

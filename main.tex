@@ -125,15 +125,23 @@ pdfkeywords={}%
   完全圏なので図式(\ref{diagram:coim_to_im})における$\ou{f}$は同型、特にモノかつエピである。$\coim f$と$\im f$はそれぞれエピ、モノなので、それらと$\ou{f}$の合成である$\underline{f}$と$\overline{f}$はそれぞれエピ、モノである。
 \end{proof}
 \paragraph{完全列}
-与えられたチェイン$\xymatrix{A\ar[r]^f&B\ar[r]^g&C}$が$gf=0$を満たすとする。このときにこれが完全であるとは、$B$の部分対象として$\Ker g\cong \Ima f$であると定めるのが普通だが、ここでは上で構成した射の分解（の一部）を使って、完全性についてもう少し調べる\footnote{$gf=0$を仮定しないとなかなかいい結果は得られない。完全性とは鎖のホモロジーの自明性のことであると思うことにすれば、$gf=0$の仮定はあってしかるべきものになるが、それでよいのだろうか。。。}。
+この段落はおおむね\cite{kashiwara2005categories}の議論に従う。
 
+与えられたチェイン$\xymatrix{A\ar[r]^f&B\ar[r]^g&C}\ (gf=0)$が完全であるとは、$B$の部分対象として$\Ker g\cong \Ima f$であると定めるのが普通だが、ここでは上で構成した射の分解（の一部）を使って、完全性についてもう少し調べる\footnote{$gf=0$を仮定しないとなかなかいい結果は得られない。完全性とは鎖のホモロジーの自明性のことであると思うことにすれば、$gf=0$の仮定はあってしかるべきものになるが、それでよいのだろうか。。。}。下のような図式を構成する。
+
+\begin{enumerate}[label=\underline{\textsf{Step. \arabic*}}]
+  \item $f$とその余核、像、$g$とその核、余像を描き、普遍性を使って$\underline{f}\colon A\to \Ima f$と$\overline{g}\colon \Coim h\to C$を生やす。
+  \item $A\to \Ima f\to B\stackrel{\underline{f}}{\to} C$が$0$で、上の命題より$\underline f$がエピなので$\Ima f\to B\to C$は$0$。$\Ker g$の普遍性より$\underline{\im f}\colon\Ima f\to \Ker g$が伸びる。双対的に$\overline{\coim g}\colon\Coker f\to \Coim g$が生える。
+\end{enumerate}
 \[
 \xymatrix{
-&&\Ima f\ar@{_(->}[rd]&&&\Ker g\ar@{^(->}[lld]&\\
+&&\Ima f\ar@{_(->}[rd]\ar[rrr]^{\underline{\im f}}&&&\Ker g\ar@{^(->}[lld]&\\
 A\ar[rrr]^{f}\ar[urr]^{\underline{f}}&&&B\ar[rrr]^{g}\ar@{->>}[lld]\ar@{->>}[rd]&&&C\\
-&\Coker f&&&\Coim h\ar[urr]_{\overline{g}}&&
+&\Coker f\ar[rrr]_{\overline{\coim g}}&&&\Coim g\ar[urr]_{\overline{g}}&&
 }
 \]
+
+このとき$A\to B\to C$が完全であるとは普通、上の図式の$\underline{\im f}$が同型であることと定める\footnote{モノ射の定義から、部分対象の間に生える射は一意である。ゆえに$B$の部分対象としての同型$\Ima f\cong \Ker g$を与える射があるなら、それは$\underline{\im f}$に限られる。}。
 \bibliographystyle{alpha}
 \bibliography{bib}
 

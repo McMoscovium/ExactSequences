@@ -63,7 +63,7 @@ pdfkeywords={}%
 \maketitle
 
 \begin{abstract}
-  Iversenの層のコホモロジーの本\cite{iversen2012cohomology}のsection I.1ではexact category（多分、普通のものと異なる）上のホモロジー代数について書かれている。このPDFではとくに蛇の補題についてまとめるが、ここで定義する完全圏は射集合にアーベル群の構造を仮定していないのでアーベル圏よりも弱い圏で、例えば射の単射性の完全列による特徴づけができない等の制限がある。しかしながらそれでもある程度ホモロジー代数を行うことが可能なので、どれくらいのことができるかメモしておく。
+  Iversenの層のコホモロジーの本\cite{iversen2012cohomology}のsection I.1ではexact category（多分、普通のものと異なる）上のホモロジー代数について書かれている。完全圏は射集合にアーベル群の構造を仮定していないのでアーベル圏よりも弱い圏で、例えば射の単射性の完全列による特徴づけができない等の制限がある。しかし上の本では、完全圏がアーベル圏よりも仮定が弱い圏であることにもかかわらずいろいろ議論が飛ばされているので、これを読むに足るくらいの知識ができるまでの議論をノートにまとめる。
 
   やたら条件を緩めても欲張りだとか弱い結果しか得られないとか言われそうだが、homsetにアーベル群の構造が入ってない状況でも蛇の補題が使えると思えば、こういうことをやってもいいだろう。
 \end{abstract}
@@ -72,6 +72,8 @@ pdfkeywords={}%
 
 \section{完全圏}
 \subsection{（余）核、（余）像}
+
+（余）核、（余）像の定義と性質について、記号の定義を兼ねて述べる。
 \paragraph{定義と性質}
 %核、余核、像、余像を定義する
 %モノ（エピ）射と完全列の関係
@@ -113,8 +115,11 @@ pdfkeywords={}%
   \Ker f'\ar[r]&X'\ar[r]&\Coim f'\ar[r]_{\ou{f'}}&\Ima f'\ar[r]&Y'\ar[r]&\Coker f'
 }\]いずれの射も普遍性によって生える射なので真ん中以外の四角は可換であるまた、$\underline{y}\circ \ou{f}$および$\ou{f'}\circ \overline{x}$に$\coim f$（これはエピ）と$\im f'$（これはモノ）を合成したものが等しいので、真ん中の四角も可換である。
 \subsection{完全圏}
-完全圏とは、零対象、核、余核をもち、上で定義した射$\ou{f}$が常に同型である圏のことと定義する\footnote{本当の完全圏は違うらしい。しかし\cite{iversen2012cohomology}でそう定義されているのでここではそれに合わせる。}。この小節の議論は完全圏上で行う。
+完全圏とは、零対象、核、余核をもち、上で定義した射$\ou{f}$が常に同型である圏のことと定義する\footnote{本当の完全圏は違うらしい。しかし\cite{iversen2012cohomology}でそう定義されているのでここではそれに合わせる。}。この小節の議論は完全圏上で行う。アーベル圏とは、加法圏でもある完全圏のことなので、ここでの議論はすべて任意のアーベル圏に適用できる。
 \paragraph{完全圏で成り立つ補題}
+
+hom-setにアーベル群の構造が入っているとモノ$\Leftrightarrow(0\to X\to Y):\ 完全$などが言えるが、完全圏だと$\Rightarrow$しか示せない。しかし、任意の射は性質の良いモノ射とエピ射の合成に分解できる。
+
 \begin{lem}
 射$f\colon X\to Y$に対し、像（resp.余像）の普遍性で伸びる標準的な射$\underline{f}$（resp. $\overline{f}$）はエピ（resp.モノ）である：\[\xymatrix{
   X\ar[r]^f\ar@[red]@{->>}[rd]_{\underline{f}}&Y&X\ar[r]^{f}\ar@{->>}[d]&Y\\
@@ -124,6 +129,60 @@ pdfkeywords={}%
 \begin{proof}
   完全圏なので図式(\ref{diagram:coim_to_im})における$\ou{f}$は同型、特にモノかつエピである。$\coim f$と$\im f$はそれぞれエピ、モノなので、それらと$\ou{f}$の合成である$\underline{f}$と$\overline{f}$はそれぞれエピ、モノである。
 \end{proof}
+
+$\ou{f}$が同型であるという仮定があるため、射がモノ、エピであるための条件を記述できる。
+
+\begin{lem}\label{lem:chalacterizationOfMono}
+  射$f\colon X\to Y$について、以下は同値\footnote{証明を見るとわかるように、$(1)\Rightarrow(2)$において完全圏という仮定、とくに$\ou{f}:\ $同型が本質的にはたらく。}
+  \begin{enumerate}[label=(\arabic*)]
+    \item $f$は単射。
+    \item $\Ima f$の普遍性により伸びる射$\underline f$は同型。
+    \item $(X,f)=\Ker(\coker f)$。
+  \end{enumerate}
+\end{lem}
+\begin{proof}
+  $(1)\Rightarrow(2):\ $$f$はモノなので$\Ker f=0$が容易に示される。したがって。$\Coim f=\Coker(\ker f)=\Coker(0\to X)=(X,\id_X)$である。したがって、図式(\ref{diagram:coim_to_im})は下のようになる：\[
+    \xymatrix{
+      0 \ar[rd] & & \Ima f \ar[rd] & & \\
+      & X \ar[rd]_{\id} \ar[rr]^(.3){f}|\hole \ar@{.>}@[red][ru]^{\underline{f}} & & Y \ar[rd] & \\
+      & & X \ar@{.>}[ru]_{\overline{f}} \ar[uu]_(.3){\ou{f}}^(.3){\cong}& & \Coker f
+    }
+  \]
+  したがって$\underline{f}=\ou{f}$：同型。
+
+$(2)\Rightarrow(3):\ $上の図式において$\underline f$が同型であるとする。$(\im f\colon \Ima f\to Y)=\Ker(\coker f)$であるが、その後ろに同型$\underline{f}$を合成した射$f$も$\Ker(\coker f)$である。
+
+$(3)\Rightarrow(1):\ $核はequalizerなのでモノである。
+\end{proof}
+
+双対的に次が成り立つ。
+\begin{lem}\label{lem:chalacterizationOfEpi}
+  射$f\colon X\to Y$について、以下は同値:
+  \begin{enumerate}[label=(\arabic*)]
+    \item $f$はモノ。
+    \item $\Coim f$の普遍性により伸びる射$\overline f$は同型。
+    \item $(Y,f)=\Coker(\ker f)$。
+  \end{enumerate}
+\end{lem}
+
+\begin{cor}
+$f\colon X\to Y$に対し以下は同値：
+\begin{enumerate}[label=(\arabic*)]
+  \item $f$は同型。
+  \item $f$はモノかつエピ。
+\end{enumerate}
+\end{cor}
+\begin{proof}
+  $(2)\Rightarrow(1)$を示す。仮定より図式(\ref{diagram:coim_to_im})は次のようになる。
+  \[
+    \xymatrix{
+      0 \ar[rd] & & Y \ar[rd]^{\id} & & \\
+      & X \ar[rd]_{\id} \ar[rr]^(.3){f}|\hole \ar@{.>}[ru]^{\underline{f}} & & Y \ar[rd] & \\
+      & & X \ar@{.>}[ru]_{\overline{f}} \ar[uu]_(.3){\ou{f}}^(.3){\cong}& & 0
+    }
+  \]したがって$f=\ou{f}:\ $同型。
+\end{proof}
+
 \paragraph{完全列}
 この段落はおおむね\cite{kashiwara2005categories}の議論に従う。
 
@@ -141,7 +200,31 @@ A\ar[rrr]^{f}\ar[urr]^{\underline{f}}&&&B\ar[rrr]^{g}\ar@{->>}[lld]\ar@{->>}[rd]
 }
 \]
 
-このとき$A\to B\to C$が完全であるとは普通、上の図式の$\underline{\im f}$が同型であることと定める\footnote{モノ射の定義から、部分対象の間に生える射は一意である。ゆえに$B$の部分対象としての同型$\Ima f\cong \Ker g$を与える射があるなら、それは$\underline{\im f}$に限られる。}。
+このとき$A\to B\to C$が完全であるとは普通、上の図式の$\underline{\im f}$が同型であることと定める\footnote{モノ射の定義から、部分対象の間に生える射は一意である。ゆえに$B$の部分対象としての同型$\Ima f\cong \Ker g$を与える射があるなら、それは$\underline{\im f}$に限られる。}のだが、これと同じ条件をこれから探す。$u$を合成$u\colon \Ker g\to B\to \Coker f$と定める\footnote{この天与の射はどうして思いつかれたのだろう？？？？}。
+
+$\Ker u$の普遍性により$\underline{\im f}$は$\Ima f\to \Ker u$に落ちる。$\Ima f$の普遍性により$\ker g\circ \ker u$は$\Ker u\to \Ima f$に落ちる。可換性により$\im f\circ \underline{(\ker g\circ\ker u)}\circ \underline{\underline{\im f}}=\im f$である。$\im f$はモノなので$\underline{(\ker g\circ\ker u)}\circ \underline{\underline{\im f}}=\id$である。同様にして$\underline{\underline{\im f}}\circ\underline{(\ker g\circ\ker u)}=\id$である。よって、$\Ker g$の部分対象の同型$\Ima f\cong \Ker u$を得る\footnote{部分対象の射はモノなので、$B$の部分対象の射$\underline{\im f}$はモノである。}。
+
+同様にして、$\Coker f$の商対象の同型$\Coker u\cong \Coim g$を得る。
+\[
+\xymatrix{
+&&&&&\Ker u\ar@{_(->}[d]\ar@<-0.5ex>[dlll]_{\underline{(\ker g\circ\ker u)}}&\\
+&&\Ima f\ar@{_(->}[rd]\ar@<-0.5ex>@{^(->}[rrr]^{\underline{\im f}}\ar@<-0.5ex>[urrr]_(0.75){\underline{\underline{\im f}}}&&&\Ker g\ar@{^(->}[lld]&\\
+A\ar[rrr]^{f}\ar[urr]^{\underline{f}}&&&B\ar[rrr]^{g}\ar@{->>}[lld]\ar@{->>}[rd]&&&C\\
+&\Coker f\ar@{->>}[rrr]_(0.4){\overline{\coim g}}\ar@{->>}[d]&&&\Coim g\ar[urr]_{\overline{g}}\ar@<0.5ex>[dlll]^{\underline{(\coker u\circ \coker f)}}&&\\
+&\Coker u\ar@<0.5ex>[urrr]^(0.3){\overline{\overline{\coim g}}}&&&&&
+}
+\]
+
+よって、\begin{align*}
+  \Ima u&\cong \Ker (\Coker f\to \Coim g)\cong \Ker(\Coker f\to \Coim g\to C)\\
+  \Coim u&\cong\Coker(\Ima f\to \Ker g)\cong \Coker(A\to \Ima f\to \Ker g)
+\end{align*}
+\begin{align*}
+  u=0\Leftrightarrow(\Coker f\stackrel{\cong}{\to}\Coim g)\Leftrightarrow(\Coker\stackrel{\cong}{\to}\Ker g)
+\end{align*}
+
+
+
 \bibliographystyle{alpha}
 \bibliography{bib}
 
